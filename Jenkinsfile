@@ -4,14 +4,6 @@ def COLOR_MAP = [
 ]
 pipeline {
   agent none
-
-  environment {
-    // Container_Registry = '453947716429.dkr.ecr.us-east-1.amazonaws.com/myshopapp'
-    // Regisry_URL = 'http://453947716429.dkr.ecr.us-east-1.amazonaws.com/myshopapp'
-    // cluster = 'cicdcluster'
-    // service = 'myshopappservice'
-  }
-  
   stages {
 
     stage('checkOut'){
