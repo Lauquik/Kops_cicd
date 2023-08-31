@@ -52,14 +52,19 @@ pipeline {
       }
       steps{
         withSonarQubeEnv('sonarserver') {
-          sh "${scannerHome}/sonar-scanner"
+          sh "${scannerHome}/sonar-scanner \
+            -Dsonar.organization=laukik \
+            -Dsonar.projectKey=laukik_cicd \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io"
         }
       }
     }
 
+
     stage('Build docker image') {
       agent{
-        label 'agent1'
+        label 'docker-sonar'
       }
       steps{
         script{
