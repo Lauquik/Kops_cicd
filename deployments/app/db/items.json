@@ -1,0 +1,123 @@
+[
+  {
+    "id": 1,
+    "name": "curabitur",
+    "brand": "Osinski Inc",
+    "size": "XS",
+    "occasion": "mattis",
+    "color": "#6cb58f",
+    "saleDiscount": 22,
+    "price": 27.33,
+    "rating": 3,
+    "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQii_rCEAMZu1lA5yMOo-4PYGGA5kqrK5C9LDAokAm7Kxo-wLNS4fJPkGCj_wAb9SaUs60bOfqNqAEnJ298SYWxgygWxL1qB-Riodhr60-7&usqp=CAE"
+  },
+  {
+    "id": 2,
+    "name": "nonummy maecenas",
+    "brand": "Sporer and Sons",
+    "size": "S",
+    "occasion": "odio",
+    "color": "#af294b",
+    "saleDiscount": 28,
+    "price": 20.96,
+    "rating": 1,
+    "image": "https://www.google.com/shopping/product/2244227539535944535?sca_esv=560322490&q=shopping+clothing+fashion&biw=1536&bih=750&dpr=1.25&prds=eto:9191696832208741610_0,pid:10019181224092340765&sa=X&ved=0ahUKEwi0kNenpPqAAxU1TmwGHe0oAiAQ8gIIgwooAA"
+  },
+  {
+    "id": 3,
+    "name": "praesent id",
+    "brand": "Feeney-Bogisich",
+    "size": "XL",
+    "occasion": "bibendum",
+    "color": "#c8a971",
+    "saleDiscount": 22,
+    "price": 13.82,
+    "rating": 2,
+    "image": "https://www.google.com/shopping/product/2244227539535944535?sca_esv=560322490&q=shopping+clothing+fashion&biw=1536&bih=750&dpr=1.25&prds=eto:9191696832208741610_0,pid:10019181224092340765&sa=X&ved=0ahUKEwi0kNenpPqAAxU1TmwGHe0oAiAQ8gIIgwooAA"
+  },
+  {
+    "id": 4,
+    "name": "in blandit",
+    "brand": "Walter-Christiansen",
+    "size": "L",
+    "occasion": "quisque",
+    "color": "#5fcd16",
+    "saleDiscount": 41,
+    "price": 43.75,
+    "rating": 4,
+    "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSgXTv_5DpzWNRAX9H0ZRDoccgFyUpfxWn97r-aWo23N6lr-StKTn6Z0uxPvY_R12untLNKEBXYUkFPkLti1TZiwL1aBHYf4DeaAviZqaXTuurWWjCjkkp-7w&usqp=CAEg"
+  },
+  {
+    "id": 5,
+    "name": "tellus nisi",
+    "brand": "Champlin-Jerde",
+    "size": "M",
+    "occasion": "dui",
+    "color": "#e969c0",
+    "saleDiscount": 21,
+    "price": 27.9,
+    "rating": 4,
+    "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSgXTv_5DpzWNRAX9H0ZRDoccgFyUpfxWn97r-aWo23N6lr-StKTn6Z0uxPvY_R12untLNKEBXYUkFPkLti1TZiwL1aBHYf4DeaAviZqaXTuurWWjCjkkp-7w&usqp=CAE"
+  },
+  {
+    "id": 6,
+    "name": "malesuada",
+    "brand": "Weissnat-Veum",
+    "size": "XL",
+    "occasion": "sapien",
+    "color": "#fb375e",
+    "saleDiscount": 26,
+    "price": 56.76,
+    "rating": 2,
+    "image": "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/f/b/tr:w-480,/fbdc89d1289_4.jpg?rnd=20200526195200"
+  },
+  {
+    "id": 7,
+    "name": "rutrum nulla",
+    "brand": "Ryan-Ernser",
+    "size": "L",
+    "occasion": "nulla",
+    "color": "#2da567",
+    "saleDiscount": 38,
+    "price": 77.42,
+    "rating": 2,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 8,
+    "name": "lacus",
+    "brand": "Greenholt, Torp and Grady",
+    "size": "XS",
+    "occasion": "nullam",
+    "color": "#060571",
+    "saleDiscount": 50,
+    "price": 47.31,
+    "rating": 5,
+    "image": "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/a/a/tr:w-480,/aa03_1_f58c484f.jpg?rnd=20200526195200"
+  },
+  {
+    "id": 9,
+    "name": "quis odio",
+    "brand": "Cassin and Sons",
+    "size": "XL",
+    "occasion": "morbi",
+    "color": "#3f79e3",
+    "saleDiscount": 24,
+    "price": 58.31,
+    "rating": 2,
+    "image": "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/c/8/tr:w-480,/c80224fKSLJMPS4019_1.jpg?rnd=20200526195200"
+  },
+  {
+    "id": 10,
+    "name": "congue",
+    "brand": "Mann-Wyman",
+    "size": "2XL",
+    "occasion": "et",
+    "color": "#d8e3fb",
+    "saleDiscount": 42,
+    "price": 77.64,
+    "rating": 1,
+    "image": "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/a/0/tr:w-480,/a0ee88dQOMN_T1200-52_1.jpg?rnd=20200526195200"
+  }
+  
+]

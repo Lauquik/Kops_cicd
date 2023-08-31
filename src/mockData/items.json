@@ -1,0 +1,123 @@
+[
+  {
+    "id": 1,
+    "name": "curabitur",
+    "brand": "Osinski Inc",
+    "size": "XS",
+    "occasion": "mattis",
+    "color": "#6cb58f",
+    "saleDiscount": 22,
+    "price": 27.33,
+    "rating": 3,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 2,
+    "name": "nonummy maecenas",
+    "brand": "Sporer and Sons",
+    "size": "S",
+    "occasion": "odio",
+    "color": "#af294b",
+    "saleDiscount": 28,
+    "price": 20.96,
+    "rating": 1,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 3,
+    "name": "praesent id",
+    "brand": "Feeney-Bogisich",
+    "size": "XL",
+    "occasion": "bibendum",
+    "color": "#c8a971",
+    "saleDiscount": 22,
+    "price": 13.82,
+    "rating": 2,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 4,
+    "name": "in blandit",
+    "brand": "Walter-Christiansen",
+    "size": "L",
+    "occasion": "quisque",
+    "color": "#5fcd16",
+    "saleDiscount": 41,
+    "price": 43.75,
+    "rating": 4,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 5,
+    "name": "tellus nisi",
+    "brand": "Champlin-Jerde",
+    "size": "M",
+    "occasion": "dui",
+    "color": "#e969c0",
+    "saleDiscount": 21,
+    "price": 27.9,
+    "rating": 4,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 6,
+    "name": "malesuada",
+    "brand": "Weissnat-Veum",
+    "size": "XL",
+    "occasion": "sapien",
+    "color": "#fb375e",
+    "saleDiscount": 26,
+    "price": 56.76,
+    "rating": 2,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 7,
+    "name": "rutrum nulla",
+    "brand": "Ryan-Ernser",
+    "size": "L",
+    "occasion": "nulla",
+    "color": "#2da567",
+    "saleDiscount": 38,
+    "price": 77.42,
+    "rating": 2,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 8,
+    "name": "lacus",
+    "brand": "Greenholt, Torp and Grady",
+    "size": "XS",
+    "occasion": "nullam",
+    "color": "#060571",
+    "saleDiscount": 50,
+    "price": 47.31,
+    "rating": 5,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 9,
+    "name": "quis odio",
+    "brand": "Cassin and Sons",
+    "size": "XL",
+    "occasion": "morbi",
+    "color": "#3f79e3",
+    "saleDiscount": 24,
+    "price": 58.31,
+    "rating": 2,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  },
+  {
+    "id": 10,
+    "name": "congue",
+    "brand": "Mann-Wyman",
+    "size": "2XL",
+    "occasion": "et",
+    "color": "#d8e3fb",
+    "saleDiscount": 42,
+    "price": 77.64,
+    "rating": 1,
+    "image": "https://i.pinimg.com/originals/92/d6/ef/92d6efa97da8f3f1415e2d43594cf858.jpg"
+  }
+  
+]

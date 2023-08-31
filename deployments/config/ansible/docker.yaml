@@ -1,0 +1,85 @@
+---
+- name: Install OpenJDK and Docker
+  hosts: docker
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install OpenJDK
+      apt:
+        name: openjdk-17-jdk
+        state: present
+
+    - name: Install required packages
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+
+    - name: Create /etc/apt/keyrings directory
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+
+    - name: Check if Docker GPG key is present
+      stat:
+        path: /etc/apt/keyrings/docker.gpg
+      register: gpg_key_check
+
+    - name: Download and install Docker GPG key if not present
+      shell: >
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      when: gpg_key_check.stat.exists == false
+
+    - name: Set permissions for Docker GPG key
+      file:
+        path: /etc/apt/keyrings/docker.gpg
+        mode: "0644"
+
+    - name: Add Docker APT repository
+      shell: >
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      when: gpg_key_check.stat.exists == false
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+
+    - name: Check if Docker group exists
+      command: getent group docker
+      register: docker_group_check
+      ignore_errors: yes
+
+    - name: Create Docker group if it doesn't exist
+      command: groupadd docker
+      when: docker_group_check.rc != 0
+
+    - name: Add Jenkins users to Docker group
+      user:
+        name: "{{ item }}"
+        groups: docker
+        append: yes
+      with_items:
+        - jenkins
+        - ubuntu
+
+    - name: Restart Docker service
+      service:
+        name: docker
+        state: restarted

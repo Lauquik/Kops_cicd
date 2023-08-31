@@ -1,0 +1,36 @@
+---
+- name: Install Nodejs and npm
+  hosts: nodejs
+  vars:
+    nodejs_version: "18.17.1"
+    nodejs_install_dir: "/usr/local/lib/nodejs"
+  become: yes
+  tasks:
+    - name: Install npm and nodejs
+      apt:
+        name:
+          - nodejs
+          - npm
+        state: present
+    - name: Create installation directory
+      file:
+        path: "{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64"
+        state: directory
+
+    - name: Download Node.js binary
+      get_url:
+        url: "https://nodejs.org/dist/v{{ nodejs_version }}/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+        dest: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+
+    - name: Extract Node.js binary
+      unarchive:
+        src: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+        dest: "{{ nodejs_install_dir }}"
+        remote_src: yes
+
+    - name: Set PATH for Node.js and npm
+      lineinfile:
+        path: "/etc/environment"
+        line: 'PATH="{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64/bin:{{ remote_path }}"'
+        state: present
+        insertafter: EOF
