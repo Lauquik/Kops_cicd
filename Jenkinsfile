@@ -10,28 +10,28 @@ pipeline {
 }
   stages {
 
-    stage('checkOut'){
-      agent {
-        label 'agent0'
-      }
-      steps { 
-        checkout scm
-      }
-    }
+    // stage('checkOut'){
+    //   agent {
+    //     label 'agent0'
+    //   }
+    //   steps { 
+    //     checkout scm
+    //   }
+    // }
 
-    stage('Test') {
-      agent{
-        label 'agent0'
-      }
-      steps {
-        sh 'npm install'
-        sh 'npm test'
-      }
-    }
+    // stage('Test') {
+    //   agent{
+    //     label 'agent0'
+    //   }
+    //   steps {
+    //     sh 'npm install'
+    //     sh 'npm test'
+    //   }
+    // }
 
     stage('Build') {
       agent{
-        label 'agent0'
+        label 'docker-sonar'
       }
       steps {
         sh 'npm install'
@@ -39,23 +39,23 @@ pipeline {
       }
     }
 
-    stage('Sonar Analysis'){
-      agent {
-        label 'agent0'
-      }
-      environment {
-          scannerHome = tool "sonarscanner"
-      }
-      steps{
-        withSonarQubeEnv('sonarserver') {
-          sh "${scannerHome}/sonar-scanner \
-            -Dsonar.organization=laukik \
-            -Dsonar.projectKey=laukik_cicd \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io"
-        }
-      }
-    }
+    // stage('Sonar Analysis'){
+    //   agent {
+    //     label 'agent0'
+    //   }
+    //   environment {
+    //       scannerHome = tool "sonarscanner"
+    //   }
+    //   steps{
+    //     withSonarQubeEnv('sonarserver') {
+    //       sh "${scannerHome}/sonar-scanner \
+    //         -Dsonar.organization=laukik \
+    //         -Dsonar.projectKey=laukik_cicd \
+    //         -Dsonar.sources=. \
+    //         -Dsonar.host.url=https://sonarcloud.io"
+    //     }
+    //   }
+    // }
 
 
     stage('Build docker image') {

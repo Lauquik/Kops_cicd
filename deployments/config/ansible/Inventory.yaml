@@ -7,6 +7,6 @@ nodejs:
   vars:
     ansible_ssh_user: ubuntu
 docker:
-  hosts: 3.81.132.102
+  hosts: 54.196.85.240
   vars:
     ansible_ssh_user: ubuntu

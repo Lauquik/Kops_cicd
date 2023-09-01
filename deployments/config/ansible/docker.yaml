@@ -3,10 +3,17 @@
   hosts: docker
   become: yes
   gather_facts: no
+  vars:
+    nodejs_version: "18.17.1"
+    nodejs_install_dir: "/usr/local/lib/nodejs"
   tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
+
+    - name: Get remote PATH
+      command: echo $PATH
+      register: remote_path
 
     # - name: Install OpenJDK
     #   apt:
@@ -84,32 +91,55 @@
     #     name: docker
     #     state: restarted
 
-    - name: Check if swapfile already exists
-      stat:
-        path: /swapfile
-      register: swapfile
-
-    - name: Create swap file
-      command: dd if=/dev/zero of=/swapfile bs=1M count=2048
-      when: not swapfile.stat.exists
-
-    - name: Set swap file permissions
+    - name: Create installation directory
       file:
-        path: /swapfile
-        mode: '0600'
-      when: not swapfile.stat.exists
+        path: "{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64"
+        state: directory
 
-    - name: Make swap
-      command: mkswap /swapfile
-      when: not swapfile.stat.exists
+    - name: Download Node.js binary
+      get_url:
+        url: "https://nodejs.org/dist/v{{ nodejs_version }}/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+        dest: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
 
-    - name: Enable swap
-      command: swapon /swapfile
-      when: not swapfile.stat.exists
+    - name: Extract Node.js binary
+      unarchive:
+        src: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+        dest: "{{ nodejs_install_dir }}"
+        remote_src: yes
 
-    - name: Add swap to fstab
+    - name: Set PATH for Node.js and npm
       lineinfile:
-        path: /etc/fstab
-        line: '/swapfile none swap sw 0 0'
+        path: "/etc/environment"
+        line: 'PATH="{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64/bin:{{ remote_path.stdout }}"'
         state: present
-      when: not swapfile.stat.exists
+        insertafter: EOF
+
+    # - name: Check if swapfile already exists
+    #   stat:
+    #     path: /swapfile
+    #   register: swapfile
+
+    # - name: Create swap file
+    #   command: dd if=/dev/zero of=/swapfile bs=1M count=2048
+    #   when: not swapfile.stat.exists
+
+    # - name: Set swap file permissions
+    #   file:
+    #     path: /swapfile
+    #     mode: '0600'
+    #   when: not swapfile.stat.exists
+
+    # - name: Make swap
+    #   command: mkswap /swapfile
+    #   when: not swapfile.stat.exists
+
+    # - name: Enable swap
+    #   command: swapon /swapfile
+    #   when: not swapfile.stat.exists
+
+    # - name: Add swap to fstab
+    #   lineinfile:
+    #     path: /etc/fstab
+    #     line: '/swapfile none swap sw 0 0'
+    #     state: present
+    #   when: not swapfile.stat.exists
