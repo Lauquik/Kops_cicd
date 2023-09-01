@@ -8,78 +8,108 @@
       apt:
         update_cache: yes
 
-    - name: Install OpenJDK
-      apt:
-        name: openjdk-17-jdk
-        state: present
+    # - name: Install OpenJDK
+    #   apt:
+    #     name: openjdk-17-jdk
+    #     state: present
 
-    - name: Install required packages
-      apt:
-        name:
-          - ca-certificates
-          - curl
-          - gnupg
-        state: present
+    # - name: Install required packages
+    #   apt:
+    #     name:
+    #       - ca-certificates
+    #       - curl
+    #       - gnupg
+    #     state: present
 
-    - name: Create /etc/apt/keyrings directory
-      file:
-        path: /etc/apt/keyrings
-        state: directory
-        mode: "0755"
+    # - name: Create /etc/apt/keyrings directory
+    #   file:
+    #     path: /etc/apt/keyrings
+    #     state: directory
+    #     mode: "0755"
 
-    - name: Check if Docker GPG key is present
+    # - name: Check if Docker GPG key is present
+    #   stat:
+    #     path: /etc/apt/keyrings/docker.gpg
+    #   register: gpg_key_check
+
+    # - name: Download and install Docker GPG key if not present
+    #   shell: >
+    #     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    #   when: gpg_key_check.stat.exists == false
+
+    # - name: Set permissions for Docker GPG key
+    #   file:
+    #     path: /etc/apt/keyrings/docker.gpg
+    #     mode: "0644"
+
+    # - name: Add Docker APT repository
+    #   shell: >
+    #     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    #   when: gpg_key_check.stat.exists == false
+
+    # - name: Update apt cache
+    #   apt:
+    #     update_cache: yes
+
+    # - name: Install Docker
+    #   apt:
+    #     name:
+    #       - docker-ce
+    #       - docker-ce-cli
+    #       - containerd.io
+    #       - docker-buildx-plugin
+    #       - docker-compose-plugin
+    #     state: present
+
+    # - name: Check if Docker group exists
+    #   command: getent group docker
+    #   register: docker_group_check
+    #   ignore_errors: yes
+
+    # - name: Create Docker group if it doesn't exist
+    #   command: groupadd docker
+    #   when: docker_group_check.rc != 0
+
+    # - name: Add Jenkins users to Docker group
+    #   user:
+    #     name: "{{ item }}"
+    #     groups: docker
+    #     append: yes
+    #   with_items:
+    #     - jenkins
+    #     - ubuntu
+
+    # - name: Restart Docker service
+    #   service:
+    #     name: docker
+    #     state: restarted
+
+    - name: Check if swapfile already exists
       stat:
-        path: /etc/apt/keyrings/docker.gpg
-      register: gpg_key_check
+        path: /swapfile
+      register: swapfile
 
-    - name: Download and install Docker GPG key if not present
-      shell: >
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-      when: gpg_key_check.stat.exists == false
+    - name: Create swap file
+      command: dd if=/dev/zero of=/swapfile bs=1M count=2048
+      when: not swapfile.stat.exists
 
-    - name: Set permissions for Docker GPG key
+    - name: Set swap file permissions
       file:
-        path: /etc/apt/keyrings/docker.gpg
-        mode: "0644"
+        path: /swapfile
+        mode: '0600'
+      when: not swapfile.stat.exists
 
-    - name: Add Docker APT repository
-      shell: >
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      when: gpg_key_check.stat.exists == false
+    - name: Make swap
+      command: mkswap /swapfile
+      when: not swapfile.stat.exists
 
-    - name: Update apt cache
-      apt:
-        update_cache: yes
+    - name: Enable swap
+      command: swapon /swapfile
+      when: not swapfile.stat.exists
 
-    - name: Install Docker
-      apt:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-          - docker-buildx-plugin
-          - docker-compose-plugin
+    - name: Add swap to fstab
+      lineinfile:
+        path: /etc/fstab
+        line: '/swapfile none swap sw 0 0'
         state: present
-
-    - name: Check if Docker group exists
-      command: getent group docker
-      register: docker_group_check
-      ignore_errors: yes
-
-    - name: Create Docker group if it doesn't exist
-      command: groupadd docker
-      when: docker_group_check.rc != 0
-
-    - name: Add Jenkins users to Docker group
-      user:
-        name: "{{ item }}"
-        groups: docker
-        append: yes
-      with_items:
-        - jenkins
-        - ubuntu
-
-    - name: Restart Docker service
-      service:
-        name: docker
-        state: restarted
+      when: not swapfile.stat.exists

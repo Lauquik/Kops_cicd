@@ -1,5 +1,5 @@
 jenkins:
-  hosts: 174.129.81.238
+  hosts: 3.82.63.94
   vars:
     ansible_ssh_user: ubuntu
 nodejs:
@@ -7,6 +7,6 @@ nodejs:
   vars:
     ansible_ssh_user: ubuntu
 docker:
-  hosts: 35.153.169.176
+  hosts: 3.81.132.102
   vars:
     ansible_ssh_user: ubuntu
