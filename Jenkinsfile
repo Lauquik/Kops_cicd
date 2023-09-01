@@ -75,7 +75,7 @@ pipeline {
       }
       steps{
         script {
-          docker.withRegistry( Regisry_URL ) {
+          docker.withRegistry( Regisry_URL, 'dockerhub') {
             dockerImage.push('latest')
           }
           dockerImage.remove()
