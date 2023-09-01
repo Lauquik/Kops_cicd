@@ -4,6 +4,10 @@ def COLOR_MAP = [
 ]
 pipeline {
   agent none
+  environment {
+  Container_Registry = 'laukik2002/kops-cicd'
+  Regisry_URL = 'https://registry.hub.docker.com'
+}
   stages {
 
     stage('checkOut'){
@@ -65,18 +69,19 @@ pipeline {
       }
     }
 
-    // stage('push to ECR'){
-    //   agent{
-    //     label 'agent1'
-    //   }
-    //   steps{
-    //     script {
-    //       docker.withRegistry( Regisry_URL, 'ecr:us-east-1:awscreds') {
-    //         dockerImage.push('latest')
-    //       }
-    //     }
-    //   }
-    // }
+    stage('push image'){
+      agent{
+        label 'docker-sonar'
+      }
+      steps{
+        script {
+          docker.withRegistry( Regisry_URL ) {
+            dockerImage.push('latest')
+          }
+          dockerImage.remove()
+        }
+      }
+    }
 
     // stage('deploy to ECS'){
     //   agent{
