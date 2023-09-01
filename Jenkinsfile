@@ -78,11 +78,21 @@ pipeline {
           docker.withRegistry( Regisry_URL, 'dockerhub') {
             dockerImage.push('latest')
           }
-          dockerImage.remove()
         }
       }
     }
 
+    stage('Remove image'){
+      agent{
+        label 'docker-sonar'
+      }
+      steps{
+        script {
+          sh "docker rmi ${Container_Registry}:$BUILD_NUMBER"
+        }
+      }
+    }
+    
     // stage('deploy to ECS'){
     //   agent{
     //     label 'agent1'
