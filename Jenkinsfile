@@ -69,30 +69,30 @@ pipeline {
       }
     }
 
-    stage('push image'){
-      agent{
-        label 'docker-sonar'
-      }
-      steps{
-        script {
-          docker.withRegistry( Regisry_URL, 'dockerhub') {
-            dockerImage.push('latest')
-          }
-        }
-      }
-    }
+    // stage('push image'){
+    //   agent{
+    //     label 'docker-sonar'
+    //   }
+    //   steps{
+    //     script {
+    //       docker.withRegistry( Regisry_URL, 'dockerhub') {
+    //         dockerImage.push('latest')
+    //       }
+    //     }
+    //   }
+    // }
 
-    stage('Remove image'){
-      agent{
-        label 'docker-sonar'
-      }
-      steps{
-        script {
-          sh "docker rmi ${Container_Registry}:$BUILD_NUMBER"
-        }
-      }
-    }
-    
+    // stage('Remove image'){
+    //   agent{
+    //     label 'docker-sonar'
+    //   }
+    //   steps{
+    //     script {
+    //       sh "docker rmi ${Container_Registry}:$BUILD_NUMBER"
+    //     }
+    //   }
+    // }
+
     // stage('deploy to ECS'){
     //   agent{
     //     label 'agent1'
@@ -107,11 +107,10 @@ pipeline {
 
   post {
       always {
-          echo "PIPELINE EXECUTED SUCCESSFULLY"
-          // echo 'Sending Slack Notifications.'
-          // slackSend channel: '#devops',
-          //     color: COLOR_MAP[currentBuild.currentResult],
-          //     message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+          echo 'Sending Slack Notifications.'
+          slackSend channel: '#devops',
+              color: COLOR_MAP[currentBuild.currentResult],
+              message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
       }
   }
 
