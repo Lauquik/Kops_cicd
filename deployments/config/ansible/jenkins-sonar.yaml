@@ -12,105 +12,105 @@
       command: echo $PATH
       register: remote_path
 
-    # - name: Update apt cache
-    #   apt:
-    #     update_cache: yes
-    #     upgrade: yes
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        upgrade: yes
 
-    # - name: Install Java
-    #   apt:
-    #     name: openjdk-11-jdk
-    #     state: present
+    - name: Install Java
+      apt:
+        name: openjdk-11-jdk
+        state: present
 
-    # - name: Add Jenkins apt key
-    #   apt_key:
-    #     url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-    #     state: present
+    - name: Add Jenkins apt key
+      apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        state: present
 
-    # - name: Add Jenkins repository
-    #   apt_repository:
-    #     repo: deb https://pkg.jenkins.io/debian-stable binary/
-    #     state: present
+    - name: Add Jenkins repository
+      apt_repository:
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
+        state: present
 
-    # - name: Update apt cache
-    #   apt:
-    #     update_cache: yes
-    #     upgrade: yes
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        upgrade: yes
 
-    # - name: Install Jenkins
-    #   apt:
-    #     name: jenkins
-    #     state: present
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
 
-    # - name: Start and enable Jenkins service
-    #   systemd:
-    #     name: jenkins
-    #     state: started
-    #     enabled: yes
+    - name: Start and enable Jenkins service
+      systemd:
+        name: jenkins
+        state: started
+        enabled: yes
 
-    # - name: Display Jenkins initial admin password
-    #   command: cat /var/lib/jenkins/secrets/initialAdminPassword
-    #   register: result
-    #   changed_when: False
+    - name: Display Jenkins initial admin password
+      command: cat /var/lib/jenkins/secrets/initialAdminPassword
+      register: result
+      changed_when: False
 
-    # - name: Print result
-    #   debug:
-    #     msg: "Jenkins initial admin password: {{ result.stdout }}"
+    - name: Print result
+      debug:
+        msg: "Jenkins initial admin password: {{ result.stdout }}"
 
-    # - name: Download sonarQube scanner
-    #   ansible.builtin.get_url:
-    #     url: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-    #     dest: /tmp/sonar-scanner-cli-5.0.1.3006-linux.zip
+    - name: Download sonarQube scanner
+      ansible.builtin.get_url:
+        url: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+        dest: /tmp/sonar-scanner-cli-5.0.1.3006-linux.zip
 
-    # - name: Unzip SonarQube Scanner
-    #   ansible.builtin.unarchive:
-    #     src: /tmp/sonar-scanner-cli-5.0.1.3006-linux.zip
-    #     dest: /opt
-    #     remote_src: yes
+    - name: Unzip SonarQube Scanner
+      ansible.builtin.unarchive:
+        src: /tmp/sonar-scanner-cli-5.0.1.3006-linux.zip
+        dest: /opt
+        remote_src: yes
 
-    # - name: Install curl
-    #   apt:
-    #     name: curl
-    #     state: present
+    - name: Install curl
+      apt:
+        name: curl
+        state: present
 
-    # - name: Add NodeSource GPG key
-    #   apt_key:
-    #     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    #     state: present
+    - name: Add NodeSource GPG key
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
 
-    # - name: Add NodeSource repository
-    #   apt_repository:
-    #     repo: deb https://deb.nodesource.com/node_18.x focal main
-    #     state: present
-    #     filename: nodesource
+    - name: Add NodeSource repository
+      apt_repository:
+        repo: deb https://deb.nodesource.com/node_18.x focal main
+        state: present
+        filename: nodesource
 
-    # - name: Update apt cache
-    #   apt:
-    #     update_cache: yes
-    #     upgrade: yes
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        upgrade: yes
         
-    # - name: Create installation directory
-    #   file:
-    #     path: "{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64"
-    #     state: directory
+    - name: Create installation directory
+      file:
+        path: "{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64"
+        state: directory
 
-    # - name: Download Node.js binary
-    #   get_url:
-    #     url: "https://nodejs.org/dist/v{{ nodejs_version }}/node-v{{ nodejs_version }}-linux-x64.tar.xz"
-    #     dest: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+    - name: Download Node.js binary
+      get_url:
+        url: "https://nodejs.org/dist/v{{ nodejs_version }}/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+        dest: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
 
-    # - name: Extract Node.js binary
-    #   unarchive:
-    #     src: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
-    #     dest: "{{ nodejs_install_dir }}"
-    #     remote_src: yes
+    - name: Extract Node.js binary
+      unarchive:
+        src: "/tmp/node-v{{ nodejs_version }}-linux-x64.tar.xz"
+        dest: "{{ nodejs_install_dir }}"
+        remote_src: yes
 
-    # - name: Set PATH for Node.js and npm
-    #   lineinfile:
-    #     path: "/etc/environment"
-    #     line: 'PATH="{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64/bin:{{ remote_path.stdout }}"'
-    #     state: present
-    #     insertafter: EOF
+    - name: Set PATH for Node.js and npm
+      lineinfile:
+        path: "/etc/environment"
+        line: 'PATH="{{ nodejs_install_dir }}/node-v{{ nodejs_version }}-linux-x64/bin:{{ remote_path.stdout }}"'
+        state: present
+        insertafter: EOF
 
     - name: Check if swapfile already exists
       stat:

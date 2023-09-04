@@ -6,6 +6,7 @@ import Navbar from "./components/navbar/Navbar";
 import Cart from "./components/cart/Cart";
 import Orders from "./components/orders/Orders";
 import Checkout from "./components/checkout/Checkout";
+import UploadPage from "./components/upload/UploadPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route exact path="/upload" element={<UploadPage />} />
           <Route exact path="/" element={<HomePage />} />
         </Routes>
       </BrowserRouter>

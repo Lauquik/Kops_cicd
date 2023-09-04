@@ -1,4 +1,3 @@
-//
 terraform {
   required_providers {
     aws = {
@@ -58,6 +57,14 @@ resource "aws_network_interface" "my-doc-interface" {
 resource "aws_network_interface" "my-jek-interface" {
   subnet_id   = aws_subnet.main.id
   security_groups      = [aws_security_group.jenkins.id]
+  tags = {
+    Name = "main"
+  }
+}
+
+resource "aws_network_interface" "my-kops-interface" {
+  subnet_id   = aws_subnet.main.id
+  security_groups      = [aws_security_group.kops.id]
   tags = {
     Name = "main"
   }
@@ -126,6 +133,33 @@ resource "aws_security_group" "docker" {
   }
 }
 
+resource "aws_security_group" "kops" {
+  name        = "kops-sg"
+  vpc_id      = aws_vpc.myVpc.id
+  description = "Security group for Docker"
+
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [aws_security_group.jenkins.id]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 
 resource "aws_instance" "jenkins-master" {
   ami           = var.ami_id
@@ -154,5 +188,35 @@ resource "aws_instance" "docker-server" {
   tags = {
     Name = "docker-server-cicd"
   }
+}
+
+resource "aws_instance" "kops" {
+  ami           = var.ami_id
+  instance_type = "t2.micro"
+  key_name      = "cicd"
+  network_interface {
+    network_interface_id = aws_network_interface.my-kops-interface.id
+    device_index         = 0
+    
+  }
+
+  tags = {
+    Name = "kops-cicd"
+  }
+}
+
+output "jenkins_master_ip" {
+  description = "Public IP of the Jenkins Master instance"
+  value       = aws_instance.jenkins-master.public_ip
+}
+
+output "docker_server_ip" {
+  description = "Public IP of the Docker Server instance"
+  value       = aws_instance.docker-server.public_ip
+}
+
+output "kops_ip" {
+  description = "Public IP of the kops instance"
+  value       = aws_instance.kops.public_ip
 }
 

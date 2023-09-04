@@ -1,12 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ItemDetail.css";
-import items from "../../mockData/items.json";
 import { GlobalContext } from "../../context/GlobalState";
 
-const getItemDetail = (id) => items.filter((item) => item.id === id)[0];
-
 function ItemDetail() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/items")
+      .then((response) => response.json())
+      .then((data) => setItems(data))
+      .catch((error) => console.error("Error fetching data", error));
+  }, []);
+
+  const getItemDetail = (id) => items.filter((item) => item.id === id)[0];
+
   const params = useParams();
   const itemId = parseInt(params?.id);
   const item = !!itemId && getItemDetail(itemId);
@@ -14,6 +22,10 @@ function ItemDetail() {
   const [isAdded, setIsAdded] = useState(
     cart.findIndex((c) => c.id === itemId) > -1
   );
+
+  if (!item) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="item-detail-container">

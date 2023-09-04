@@ -10,24 +10,24 @@ pipeline {
 }
   stages {
 
-    // stage('checkOut'){
-    //   agent {
-    //     label 'agent0'
-    //   }
-    //   steps { 
-    //     checkout scm
-    //   }
-    // }
+    stage('checkOut'){
+      agent {
+        label 'agent0'
+      }
+      steps { 
+        checkout scm
+      }
+    }
 
-    // stage('Test') {
-    //   agent{
-    //     label 'agent0'
-    //   }
-    //   steps {
-    //     sh 'npm install'
-    //     sh 'npm test'
-    //   }
-    // }
+    stage('Test') {
+      agent{
+        label 'agent0'
+      }
+      steps {
+        sh 'npm install'
+        sh 'npm test'
+      }
+    }
 
     stage('Build') {
       agent{
@@ -39,23 +39,23 @@ pipeline {
       }
     }
 
-    // stage('Sonar Analysis'){
-    //   agent {
-    //     label 'agent0'
-    //   }
-    //   environment {
-    //       scannerHome = tool "sonarscanner"
-    //   }
-    //   steps{
-    //     withSonarQubeEnv('sonarserver') {
-    //       sh "${scannerHome}/sonar-scanner \
-    //         -Dsonar.organization=laukik \
-    //         -Dsonar.projectKey=laukik_cicd \
-    //         -Dsonar.sources=. \
-    //         -Dsonar.host.url=https://sonarcloud.io"
-    //     }
-    //   }
-    // }
+    stage('Sonar Analysis'){
+      agent {
+        label 'agent0'
+      }
+      environment {
+          scannerHome = tool "sonarscanner"
+      }
+      steps{
+        withSonarQubeEnv('sonarserver') {
+          sh "${scannerHome}/sonar-scanner \
+            -Dsonar.organization=laukik \
+            -Dsonar.projectKey=laukik_cicd \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io"
+        }
+      }
+    }
 
 
     stage('Build docker image') {
@@ -69,40 +69,40 @@ pipeline {
       }
     }
 
-    // stage('push image'){
-    //   agent{
-    //     label 'docker-sonar'
-    //   }
-    //   steps{
-    //     script {
-    //       docker.withRegistry( Regisry_URL, 'dockerhub') {
-    //         dockerImage.push('latest')
-    //       }
-    //     }
-    //   }
-    // }
+    stage('push image'){
+      agent{
+        label 'docker-sonar'
+      }
+      steps{
+        script {
+          docker.withRegistry( Regisry_URL, 'dockerhub') {
+            dockerImage.push('latest')
+          }
+        }
+      }
+    }
 
-    // stage('Remove image'){
-    //   agent{
-    //     label 'docker-sonar'
-    //   }
-    //   steps{
-    //     script {
-    //       sh "docker rmi ${Container_Registry}:$BUILD_NUMBER"
-    //     }
-    //   }
-    // }
+    stage('Remove image'){
+      agent{
+        label 'docker-sonar'
+      }
+      steps{
+        script {
+          sh "docker rmi ${Container_Registry}:$BUILD_NUMBER"
+        }
+      }
+    }
 
-    // stage('deploy to ECS'){
-    //   agent{
-    //     label 'agent1'
-    //   }
-    //   steps {
-    //       withAWS(credentials: 'awscreds', region: 'us-east-1') {
-    //           sh "aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment"
-    //       }
-    //   }
-    // }
+    stage('deploy to ECS'){
+      agent{
+        label 'agent1'
+      }
+      steps {
+          withAWS(credentials: 'awscreds', region: 'us-east-1') {
+              sh "aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment"
+          }
+      }
+    }
   }
 
   post {
