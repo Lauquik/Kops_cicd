@@ -76,7 +76,7 @@ pipeline {
       steps{
         script {
           docker.withRegistry( Regisry_URL, 'dockerhub') {
-            dockerImage.push('latest')
+            dockerImage.push( env.BUILD_NUMBER )
           }
         }
       }
@@ -93,16 +93,17 @@ pipeline {
       }
     }
 
-    stage('deploy to ECS'){
-      agent{
-        label 'agent1'
-      }
-      steps {
-          withAWS(credentials: 'awscreds', region: 'us-east-1') {
-              sh "aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment"
-          }
-      }
+    stage('Deploy to k8s') {
+        agent {
+            label 'kops' 
+        }
+        steps {
+            script {
+                sh "helm upgrade my-release myapp --set image.tag=env.BUILD_NUMBER"
+            }
+        }
     }
+
   }
 
   post {

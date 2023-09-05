@@ -1,0 +1,4 @@
+image:
+  repository: laukik2002/kops-cicd
+  tag: latest
+  pullPolicy: IfNotPresent
