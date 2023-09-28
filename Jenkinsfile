@@ -99,7 +99,7 @@ pipeline {
         }
         steps {
             script {
-                sh "helm upgrade shoppingX myapp --set image.tag=env.BUILD_NUMBER"
+                sh "helm upgrade shoppingX myapp --set image.tag=env.BUILD_NUMBER --namespace shoppin-ns"
             }
         }
     }
