@@ -99,7 +99,7 @@ pipeline {
         }
         steps {
             script {
-                sh "helm upgrade shoppix-release Kops_cicd/deployments/kubernetes --set image.tag=9 --namespace shoppin-ns"
+                sh "helm upgrade shoppix-release ~/Kops_cicd/deployments/kubernetes --set image.tag=9 --namespace shoppin-ns"
             }
         }
     }
