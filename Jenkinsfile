@@ -12,7 +12,7 @@ pipeline {
 
     stage('checkOut'){
       agent {
-        label 'agent0'
+        label 'main'
       }
       steps { 
         checkout scm
@@ -21,7 +21,7 @@ pipeline {
 
     stage('Test') {
       agent{
-        label 'agent0'
+        label 'main'
       }
       steps {
         sh 'npm install'
@@ -29,7 +29,7 @@ pipeline {
       }
     }
 
-    stage('Build') {
+    stage('main') {
       agent{
         label 'docker-sonar'
       }
@@ -41,7 +41,7 @@ pipeline {
 
     stage('Sonar Analysis'){
       agent {
-        label 'agent0'
+        label 'main'
       }
       environment {
           scannerHome = tool "sonarscanner"
@@ -60,7 +60,7 @@ pipeline {
 
     stage('Build docker image') {
       agent{
-        label 'docker-sonar'
+        label 'docker'
       }
       steps{
         script{
@@ -71,7 +71,7 @@ pipeline {
 
     stage('push image'){
       agent{
-        label 'docker-sonar'
+        label 'docker'
       }
       steps{
         script {
@@ -84,7 +84,7 @@ pipeline {
 
     stage('Remove image'){
       agent{
-        label 'docker-sonar'
+        label 'docker'
       }
       steps{
         script {
@@ -93,16 +93,16 @@ pipeline {
       }
     }
 
-    stage('Deploy to k8s') {
-        agent {
-            label 'kops' 
-        }
-        steps {
-            script {
-                sh "helm upgrade my-release myapp --set image.tag=env.BUILD_NUMBER"
-            }
-        }
-    }
+    // stage('Deploy to k8s') {
+    //     agent {
+    //         label 'kops' 
+    //     }
+    //     steps {
+    //         script {
+    //             sh "helm upgrade my-release myapp --set image.tag=env.BUILD_NUMBER"
+    //         }
+    //     }
+    // }
 
   }
 

@@ -16,6 +16,11 @@
       apt:
         update_cache: yes
         upgrade: yes
+        
+    - name: Install unzip package
+      apt:
+        name: unzip
+        state: present
 
     - name: Install Java
       apt:

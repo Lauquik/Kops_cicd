@@ -1,12 +1,12 @@
 jenkins:
-  hosts: 3.82.63.94
+  hosts: 100.27.14.136
   vars:
     ansible_ssh_user: ubuntu
 kops:
-  hosts: 54.81.187.56
+  hosts: 52.91.182.230
   vars:
     ansible_ssh_user: ubuntu
 docker:
-  hosts: 54.196.85.240
+  hosts: 52.87.153.148
   vars:
     ansible_ssh_user: ubuntu
