@@ -31,7 +31,7 @@ pipeline {
 
     stage('main') {
       agent{
-        label 'docker-sonar'
+        label 'docker'
       }
       steps {
         sh 'npm install'
