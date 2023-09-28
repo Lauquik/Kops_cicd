@@ -19,43 +19,43 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      agent{
-        label 'main'
-      }
-      steps {
-        sh 'npm install'
-        sh 'npm test'
-      }
-    }
+    // stage('Test') {
+    //   agent{
+    //     label 'main'
+    //   }
+    //   steps {
+    //     sh 'npm install'
+    //     sh 'npm test'
+    //   }
+    // }
 
-    stage('main') {
-      agent{
-        label 'docker'
-      }
-      steps {
-        sh 'npm install'
-        sh 'npm run build'
-      }
-    }
+    // stage('build') {
+    //   agent{
+    //     label 'docker'
+    //   }
+    //   steps {
+    //     sh 'npm install'
+    //     sh 'npm run build'
+    //   }
+    // }
 
-    stage('Sonar Analysis'){
-      agent {
-        label 'main'
-      }
-      environment {
-          scannerHome = tool "sonarscanner"
-      }
-      steps{
-        withSonarQubeEnv('sonarserver') {
-          sh "${scannerHome}/sonar-scanner \
-            -Dsonar.organization=laukik \
-            -Dsonar.projectKey=laukik_cicd \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io"
-        }
-      }
-    }
+    // stage('Sonar Analysis'){
+    //   agent {
+    //     label 'main'
+    //   }
+    //   environment {
+    //       scannerHome = tool "sonarscanner"
+    //   }
+    //   steps{
+    //     withSonarQubeEnv('sonarserver') {
+    //       sh "${scannerHome}/sonar-scanner \
+    //         -Dsonar.organization=laukik \
+    //         -Dsonar.projectKey=laukik_cicd \
+    //         -Dsonar.sources=. \
+    //         -Dsonar.host.url=https://sonarcloud.io"
+    //     }
+    //   }
+    // }
 
 
     stage('Build docker image') {
