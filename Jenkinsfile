@@ -19,43 +19,43 @@ pipeline {
       }
     }
 
-    // stage('Test') {
-    //   agent{
-    //     label 'main'
-    //   }
-    //   steps {
-    //     sh 'npm install'
-    //     sh 'npm test'
-    //   }
-    // }
+    stage('Test') {
+      agent{
+        label 'main'
+      }
+      steps {
+        sh 'npm install'
+        sh 'npm test'
+      }
+    }
 
-    // stage('build') {
-    //   agent{
-    //     label 'docker'
-    //   }
-    //   steps {
-    //     sh 'npm install'
-    //     sh 'npm run build'
-    //   }
-    // }
+    stage('build') {
+      agent{
+        label 'docker'
+      }
+      steps {
+        sh 'npm install'
+        sh 'npm run build'
+      }
+    }
 
-    // stage('Sonar Analysis'){
-    //   agent {
-    //     label 'main'
-    //   }
-    //   environment {
-    //       scannerHome = tool "sonarscanner"
-    //   }
-    //   steps{
-    //     withSonarQubeEnv('sonarserver') {
-    //       sh "${scannerHome}/sonar-scanner \
-    //         -Dsonar.organization=laukik \
-    //         -Dsonar.projectKey=laukik_cicd \
-    //         -Dsonar.sources=. \
-    //         -Dsonar.host.url=https://sonarcloud.io"
-    //     }
-    //   }
-    // }
+    stage('Sonar Analysis'){
+      agent {
+        label 'main'
+      }
+      environment {
+          scannerHome = tool "sonarscanner"
+      }
+      steps{
+        withSonarQubeEnv('sonarserver') {
+          sh "${scannerHome}/sonar-scanner \
+            -Dsonar.organization=laukik \
+            -Dsonar.projectKey=laukik_cicd \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io"
+        }
+      }
+    }
 
 
     stage('Build docker image') {
@@ -93,16 +93,16 @@ pipeline {
       }
     }
 
-    // stage('Deploy to k8s') {
-    //     agent {
-    //         label 'kops' 
-    //     }
-    //     steps {
-    //         script {
-    //             sh "helm upgrade shoppingX myapp --set image.tag=env.BUILD_NUMBER"
-    //         }
-    //     }
-    // }
+    stage('Deploy to k8s') {
+        agent {
+            label 'kops' 
+        }
+        steps {
+            script {
+                sh "helm upgrade shoppingX myapp --set image.tag=env.BUILD_NUMBER"
+            }
+        }
+    }
 
   }
 
