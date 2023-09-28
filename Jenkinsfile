@@ -6,7 +6,7 @@ pipeline {
   agent none
   environment {
   Container_Registry = 'laukik2002/kops-cicd'
-  Regisry_URL = 'https://registry.hub.docker.com'
+  Registry_URL = 'https://registry.hub.docker.com'
 }
   stages {
 
@@ -75,7 +75,7 @@ pipeline {
       }
       steps{
         script {
-          docker.withRegistry( Regisry_URL, 'dockerhub') {
+          docker.withRegistry( Registry_URL, 'dockerhub') {
             dockerImage.push( env.BUILD_NUMBER )
           }
         }
@@ -99,7 +99,7 @@ pipeline {
     //     }
     //     steps {
     //         script {
-    //             sh "helm upgrade my-release myapp --set image.tag=env.BUILD_NUMBER"
+    //             sh "helm upgrade shoppingX myapp --set image.tag=env.BUILD_NUMBER"
     //         }
     //     }
     // }
