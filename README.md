@@ -1,4 +1,4 @@
-# CI/CD Pipeline with Kubernetes, Jenkins, Terraform, and Ansible
+# CI/CD Pipeline with Kubernetes, Jenkins, Terraform, Ansible and AWS
 
 This README provides an overview of the CI/CD pipeline setup for deploying services on a Kubernetes cluster. The pipeline incorporates Jenkins, Terraform, Ansible, and other tools to automate AWS infrastructure provisioning, instance configuration, code analysis, and application deployment. Below, you'll find information on the project's structure and how to set up and use this pipeline.
 
