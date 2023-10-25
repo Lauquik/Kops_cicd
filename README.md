@@ -52,15 +52,4 @@ You can customize this CI/CD pipeline to suit your specific project needs:
 
 If you encounter any issues, have questions, or need support, please reach out to the project team or your system administrator for assistance.
 
-## Contributors
-
-- [Your Name](https://github.com/yourusername)
-- [Collaborator Name](https://github.com/collaboratorusername)
-
-Feel free to add more contributors as needed.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
